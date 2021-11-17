@@ -58,6 +58,16 @@ namespace HospitalLibrary.Migrations
                             PublishAllowed = false,
                             SubmissionDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "alallalal"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Anonymous = false,
+                            IsPublished = false,
+                            PatientUsername = "imbiamba",
+                            PublishAllowed = false,
+                            SubmissionDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Text = "alallalal"
                         });
                 });
 
@@ -124,50 +134,6 @@ namespace HospitalLibrary.Migrations
                             Width = 600.0,
                             X = 0.0,
                             Y = 250.0
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Height = 110.0,
-                            IdElement = "-1",
-                            Name = "",
-                            Type = "road",
-                            Width = 50.0,
-                            X = 0.0,
-                            Y = 290.0
-                        },
-                        new
-                        {
-                            Id = "4",
-                            Height = 400.0,
-                            IdElement = "-1",
-                            Name = "",
-                            Type = "road",
-                            Width = 50.0,
-                            X = 305.0,
-                            Y = 0.0
-                        },
-                        new
-                        {
-                            Id = "5",
-                            Height = 80.0,
-                            IdElement = "-1",
-                            Name = "P",
-                            Type = "parking",
-                            Width = 50.0,
-                            X = 245.0,
-                            Y = 310.0
-                        },
-                        new
-                        {
-                            Id = "6",
-                            Height = 80.0,
-                            IdElement = "-1",
-                            Name = "P",
-                            Type = "parking",
-                            Width = 50.0,
-                            X = 380.0,
-                            Y = 20.0
                         });
                 });
 
@@ -201,45 +167,205 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ehealthcare.Model.PatientFeedback", b =>
+            modelBuilder.Entity("HospitalLibrary.Model.PatientAllergen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("Anonymous")
-                        .HasColumnType("boolean");
+                    b.Property<int>("AllergenId")
+                        .HasColumnType("integer");
 
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PatientUsername")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PublishAllowed")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("SubmissionDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PatientFeedbacks");
+                    b.ToTable("PatientAllergens");
 
                     b.HasData(
                         new
                         {
-                            Id = -1,
-                            Anonymous = false,
-                            IsPublished = false,
-                            PatientUsername = "p1",
-                            PublishAllowed = false,
-                            SubmissionDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Text = "alallalal"
+                            Id = 1,
+                            AllergenId = 1,
+                            MedicalRecordId = 1
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HomeAddress")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityId = 1,
+                            HomeAddress = "Sime Milutinovica, 2"
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Allergen", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergens");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Type = "macija dlaka"
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            Name = "Novi Sad",
+                            PostalCode = "21000"
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "21000",
+                            Name = "Srbija"
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.MedicalPermit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("PatientId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("MedicalPermits");
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.MedicalRecord", b =>
+                {
+                    b.Property<string>("PatientId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PersonalDoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PersonalId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Profession")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PatientId");
+
+                    b.HasIndex("PersonalDoctorId");
+
+                    b.ToTable("MedicalRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            PatientId = "imbiamba",
+                            BloodType = 1,
+                            DoctorId = "1",
+                            Height = 186,
+                            PersonalId = "1209001129123",
+                            Profession = "Professor",
+                            Weight = 90
                         });
                 });
 
@@ -452,17 +578,143 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ehealthcare.Model.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("LoginType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ParentName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Doctor", b =>
+                {
+                    b.HasBaseType("ehealthcare.Model.User");
+
+                    b.Property<int>("Specialization")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsedOffDays")
+                        .HasColumnType("integer");
+
+                    b.ToTable("Doctors");
+
+                    b.HasDiscriminator().HasValue("Doctor");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "nelex",
+                            AddressId = 1,
+                            DateOfBirth = new DateTime(1999, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "nemanjar@gmail.com",
+                            Gender = "male",
+                            IsActivated = false,
+                            IsBlocked = false,
+                            LoginType = 2,
+                            Name = "Nemanja",
+                            ParentName = "Zoran",
+                            Password = "najjacapecurka",
+                            Phone = "019919199191",
+                            Surname = "Radojcic",
+                            Username = "nelex",
+                            Specialization = 0,
+                            UsedOffDays = 12
+                        });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Patient", b =>
+                {
+                    b.HasBaseType("ehealthcare.Model.User");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("integer");
+
+                    b.ToTable("Patients");
+
+                    b.HasDiscriminator().HasValue("Patient");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "imbiamba",
+                            AddressId = 1,
+                            DateOfBirth = new DateTime(2001, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "markoilic@gmail.com",
+                            Gender = "male",
+                            IsActivated = false,
+                            IsBlocked = false,
+                            LoginType = 0,
+                            Name = "Marko",
+                            ParentName = "Milan",
+                            Password = "pecurkaa",
+                            Phone = "019919199191",
+                            Surname = "Ilic",
+                            Username = "imbiamba",
+                            MedicalRecordId = 1
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.FloorGraphic", b =>
                 {
                     b.OwnsMany("ehealthcare.Model.RoomGraphic", "RoomGraphics", b1 =>
                         {
-                            b1.Property<string>("FloorGraphicId")
-                                .HasColumnType("text");
-
                             b1.Property<string>("Id")
                                 .HasColumnType("text");
 
                             b1.Property<string>("DoorPosition")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("FloorGraphicId")
+                                .IsRequired()
                                 .HasColumnType("text");
 
                             b1.Property<int>("Height")
@@ -480,7 +732,9 @@ namespace HospitalLibrary.Migrations
                             b1.Property<int>("Y")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("FloorGraphicId", "Id");
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("FloorGraphicId");
 
                             b1.HasIndex("RoomId");
 
@@ -496,9 +750,9 @@ namespace HospitalLibrary.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "0",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "0",
                                     Height = 100,
                                     RoomId = "0",
                                     Width = 100,
@@ -507,9 +761,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "1",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "0",
                                     Height = 100,
                                     RoomId = "1",
                                     Width = 100,
@@ -518,9 +772,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "2",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "0",
                                     Height = 145,
                                     RoomId = "2",
                                     Width = 75,
@@ -529,9 +783,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "3",
                                     DoorPosition = "left",
+                                    FloorGraphicId = "0",
                                     Height = 145,
                                     RoomId = "3",
                                     Width = 75,
@@ -540,9 +794,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "4",
                                     DoorPosition = "top",
+                                    FloorGraphicId = "0",
                                     Height = 80,
                                     RoomId = "4",
                                     Width = 147,
@@ -551,9 +805,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "5",
                                     DoorPosition = "top",
+                                    FloorGraphicId = "0",
                                     Height = 80,
                                     RoomId = "5",
                                     Width = 147,
@@ -562,9 +816,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "0",
                                     Id = "6",
                                     DoorPosition = "none",
+                                    FloorGraphicId = "0",
                                     Height = 160,
                                     RoomId = "6",
                                     Width = 140,
@@ -573,9 +827,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "7",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "1",
                                     Height = 100,
                                     RoomId = "7",
                                     Width = 100,
@@ -584,9 +838,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "8",
                                     DoorPosition = "left",
+                                    FloorGraphicId = "1",
                                     Height = 100,
                                     RoomId = "8",
                                     Width = 100,
@@ -595,9 +849,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "9",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "1",
                                     Height = 100,
                                     RoomId = "9",
                                     Width = 100,
@@ -606,9 +860,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "10",
                                     DoorPosition = "left",
+                                    FloorGraphicId = "1",
                                     Height = 100,
                                     RoomId = "10",
                                     Width = 100,
@@ -617,9 +871,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "11",
                                     DoorPosition = "right",
+                                    FloorGraphicId = "1",
                                     Height = 145,
                                     RoomId = "11",
                                     Width = 75,
@@ -628,9 +882,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "12",
                                     DoorPosition = "left",
+                                    FloorGraphicId = "1",
                                     Height = 145,
                                     RoomId = "12",
                                     Width = 75,
@@ -639,9 +893,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "13",
                                     DoorPosition = "top",
+                                    FloorGraphicId = "1",
                                     Height = 80,
                                     RoomId = "13",
                                     Width = 147,
@@ -650,9 +904,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "14",
                                     DoorPosition = "top",
+                                    FloorGraphicId = "1",
                                     Height = 80,
                                     RoomId = "14",
                                     Width = 147,
@@ -661,9 +915,9 @@ namespace HospitalLibrary.Migrations
                                 },
                                 new
                                 {
-                                    FloorGraphicId = "1",
                                     Id = "15",
                                     DoorPosition = "none",
+                                    FloorGraphicId = "1",
                                     Height = 100,
                                     RoomId = "15",
                                     Width = 140,
@@ -671,6 +925,57 @@ namespace HospitalLibrary.Migrations
                                     Y = 220
                                 });
                         });
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.Address", b =>
+                {
+                    b.HasOne("ehealthcare.Model.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.City", b =>
+                {
+                    b.HasOne("ehealthcare.Model.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.MedicalPermit", b =>
+                {
+                    b.HasOne("ehealthcare.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
+                    b.HasOne("ehealthcare.Model.Patient", null)
+                        .WithMany("MedicalPermit")
+                        .HasForeignKey("PatientId");
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.MedicalRecord", b =>
+                {
+                    b.HasOne("ehealthcare.Model.Patient", "Patient")
+                        .WithOne("Medical")
+                        .HasForeignKey("ehealthcare.Model.MedicalRecord", "PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ehealthcare.Model.Doctor", "PersonalDoctor")
+                        .WithMany()
+                        .HasForeignKey("PersonalDoctorId");
+                });
+
+            modelBuilder.Entity("ehealthcare.Model.User", b =>
+                {
+                    b.HasOne("ehealthcare.Model.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
