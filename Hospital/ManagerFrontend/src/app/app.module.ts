@@ -15,10 +15,6 @@ import { PharmaciesService } from './pharmacies-view/pharmacies.service';
 import { EditPharmacyService } from './edit-pharmacy/edit-pharmacy.service';
 
 import { FeedBackComponent } from './feedback/feedback.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { FeedbackService } from './service/feedback.service';
 import { OrderingMedicineComponent } from './ordering-medicine/ordering-medicine.component';
 import { SearchPharmaciesPipe } from './ordering-medicine/search-pharmacies.pipe';
@@ -34,19 +30,10 @@ import { SearchPharmaciesPipe } from './ordering-medicine/search-pharmacies.pipe
     PharmaciesViewComponent,
     FeedBackComponent,
     OrderingMedicineComponent,
-    SearchPharmaciesPipe
+    SearchPharmaciesPipe,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RoomsViewModule
-  ],
-  providers: [ 
-    PharmaciesService,
-    FeedbackService,
-    EditPharmacyService
-  ],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, RoomsViewModule],
+  providers: [PharmaciesService, FeedbackService, EditPharmacyService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

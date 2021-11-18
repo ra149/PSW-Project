@@ -6,20 +6,17 @@ import { BuildingFloorsComponent } from './building-floors/building-floors.compo
 import { RoomsViewComponent } from './rooms-view/rooms-view.component';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { EditRoomComponent } from './edit-room/edit-room.component';
+import { RoomEquipmentComponent } from './room-equipment/room-equipment.component';
 
 @NgModule({
   declarations: [
     BuildingFloorsComponent,
     RoomsViewComponent,
     RoomInfoComponent,
-    EditRoomComponent
+    EditRoomComponent,
+    RoomEquipmentComponent,
   ],
-  imports: [
-    SharedModule,
-    RoomsRoutingModule
-  ],
-  exports:[
-    SharedModule
-  ]
+  imports: [SharedModule, RoomsRoutingModule],
+  exports: [SharedModule],
 })
-export class RoomsViewModule { }
+export class RoomsViewModule {}
