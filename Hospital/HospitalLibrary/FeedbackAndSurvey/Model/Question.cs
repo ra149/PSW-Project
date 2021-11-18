@@ -20,6 +20,5 @@ namespace HospitalLibrary.FeedbackAndSurvey.Model
             Value = value;
             Category = category;
         }
-
     }
 }

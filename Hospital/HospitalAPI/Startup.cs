@@ -21,6 +21,7 @@ using HospitalLibrary.FeedbackAndSurvey.Service;
 using HospitalLibrary.FeedbackAndSurvey.Model;
 using HospitalLibrary.FeedbackAndSurvey.Repository;
 using HospitalAPI.DTO;
+using HospitalAPI.Validators;
 
 namespace HospitalAPI
 {
@@ -48,6 +49,7 @@ namespace HospitalAPI
             }).AddFluentValidation().AddNewtonsoftJson();
 
             services.AddTransient<IValidator<PatientFeedbackDTO>, PatientFeedbackValidator>();
+            services.AddTransient<IValidator<SurveyQuestionDto>, SurveyValidator>();
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder
@@ -71,6 +73,12 @@ namespace HospitalAPI
             services.AddScoped<IPatientFeedbackService, PatientFeedbackService>();
             services.AddScoped<GenericDbRepository<PatientFeedback>, PatientFeedbackDbRepository>();
             services.AddScoped<IPatientFeedbackRepository, PatientFeedbackDbRepository>();
+
+            services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<GenericDbRepository<Survey>, SurveyDbRepository>();
+            services.AddScoped<ISurveyRepository, SurveyDbRepository>();
+
+
 
         }
 
