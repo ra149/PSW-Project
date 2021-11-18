@@ -12,7 +12,7 @@ namespace ehealthcare.Model
         public string DoorPosition { get; set; }
 
         public string RoomId { get; set; }
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
 
         public RoomGraphic():base("undefinedKey")

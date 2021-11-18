@@ -10,7 +10,7 @@ using ehealthcare.Model;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20211117230605_PatientMigration")]
+    [Migration("20211118160417_PatientMigration")]
     partial class PatientMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
