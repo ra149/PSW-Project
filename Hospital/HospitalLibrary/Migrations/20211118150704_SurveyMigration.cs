@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class GraphicRoom : Migration
+    public partial class SurveyMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,6 +76,19 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Surveys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SubmissionDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Surveys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoomGraphics",
                 columns: table => new
                 {
@@ -105,18 +118,38 @@ namespace HospitalLibrary.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    SurveyId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    Value = table.Column<int>(nullable: false),
+                    Category = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => new { x.SurveyId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_Questions_Surveys_SurveyId",
+                        column: x => x.SurveyId,
+                        principalTable: "Surveys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "ExteriorGraphic",
                 columns: new[] { "Id", "Height", "IdElement", "Name", "Type", "Width", "X", "Y" },
                 values: new object[,]
                 {
+                    { "6", 80.0, "-1", "P", "parking", 50.0, 380.0, 20.0 },
                     { "0", 200.0, "0", "ZGR1", "building", 100.0, 180.0, 30.0 },
                     { "1", 110.0, "1", "ZGR2", "building", 180.0, 380.0, 120.0 },
                     { "2", 50.0, "-1", "", "road", 600.0, 0.0, 250.0 },
                     { "3", 110.0, "-1", "", "road", 50.0, 0.0, 290.0 },
                     { "4", 400.0, "-1", "", "road", 50.0, 305.0, 0.0 },
-                    { "5", 80.0, "-1", "P", "parking", 50.0, 245.0, 310.0 },
-                    { "6", 80.0, "-1", "P", "parking", 50.0, 380.0, 20.0 }
+                    { "5", 80.0, "-1", "P", "parking", 50.0, 245.0, 310.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -138,12 +171,12 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Floor", "IsRenovated", "IsRenovatedUntill", "Name", "NumOfTakenBeds", "RoomType", "Sector" },
                 values: new object[,]
                 {
-                    { "8", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Operation room 2", 0, 1, "OS" },
                     { "13", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Restroom 3", 0, 3, "RRS" },
                     { "12", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Examination room 4", 0, 0, "ES" },
                     { "11", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Examination room 3", 0, 0, "ES" },
                     { "10", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Operation room 4", 0, 1, "OS" },
                     { "9", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Operation room 3", 0, 1, "OS" },
+                    { "8", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Operation room 2", 0, 1, "OS" },
                     { "7", 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Operation room 1", 0, 1, "OS" },
                     { "2", 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Examination room 1", 1, 0, "ES" },
                     { "5", 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Restroom 2", 0, 3, "RRS" },
@@ -157,25 +190,35 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Surveys",
+                columns: new[] { "Id", "SubmissionDate" },
+                values: new object[] { -1, new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "SurveyId", "Id", "Category", "Value" },
+                values: new object[] { -1, -1, 0, 1 });
+
+            migrationBuilder.InsertData(
                 table: "RoomGraphics",
                 columns: new[] { "FloorGraphicId", "Id", "DoorPosition", "Height", "RoomId", "Width", "X", "Y" },
                 values: new object[,]
                 {
-                    { "0", "0", "right", 100, "0", 100, 0, 0 },
-                    { "0", "1", "right", 100, "1", 100, 0, 100 },
-                    { "0", "2", "right", 145, "2", 75, 0, 340 },
-                    { "0", "3", "left", 145, "3", 75, 222, 340 },
-                    { "0", "4", "top", 80, "4", 147, 0, 517 },
-                    { "0", "5", "top", 80, "5", 147, 150, 517 },
-                    { "0", "6", "none", 160, "6", 140, 150, 20 },
-                    { "1", "7", "right", 100, "7", 100, 0, 0 },
-                    { "1", "8", "left", 100, "8", 100, 197, 0 },
-                    { "1", "9", "right", 100, "9", 100, 0, 100 },
-                    { "1", "10", "left", 100, "10", 100, 197, 100 },
-                    { "1", "11", "right", 145, "11", 75, 0, 340 },
-                    { "1", "12", "left", 145, "12", 75, 222, 340 },
                     { "1", "13", "top", 80, "13", 147, 0, 517 },
+                    { "1", "12", "left", 145, "12", 75, 222, 340 },
+                    { "1", "11", "right", 145, "11", 75, 0, 340 },
+                    { "1", "10", "left", 100, "10", 100, 197, 100 },
+                    { "1", "9", "right", 100, "9", 100, 0, 100 },
+                    { "1", "8", "left", 100, "8", 100, 197, 0 },
                     { "1", "14", "top", 80, "14", 147, 150, 517 },
+                    { "1", "7", "right", 100, "7", 100, 0, 0 },
+                    { "0", "5", "top", 80, "5", 147, 150, 517 },
+                    { "0", "4", "top", 80, "4", 147, 0, 517 },
+                    { "0", "3", "left", 145, "3", 75, 222, 340 },
+                    { "0", "2", "right", 145, "2", 75, 0, 340 },
+                    { "0", "1", "right", 100, "1", 100, 0, 100 },
+                    { "0", "0", "right", 100, "0", 100, 0, 0 },
+                    { "0", "6", "none", 160, "6", 140, 150, 20 },
                     { "1", "15", "none", 100, "15", 140, 10, 220 }
                 });
 
@@ -194,7 +237,13 @@ namespace HospitalLibrary.Migrations
                 name: "PatientFeedbacks");
 
             migrationBuilder.DropTable(
+                name: "Questions");
+
+            migrationBuilder.DropTable(
                 name: "RoomGraphics");
+
+            migrationBuilder.DropTable(
+                name: "Surveys");
 
             migrationBuilder.DropTable(
                 name: "FloorGraphics");

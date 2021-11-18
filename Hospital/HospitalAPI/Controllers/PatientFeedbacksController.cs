@@ -26,16 +26,31 @@ namespace HospitalAPI.Controllers
         private readonly IMapper _mapper;
 
 
-        public PatientFeedbacksController(IPatientFeedbackService patientFeedbackService, IMapper mapper)
+        public PatientFeedbacksController(IPatientFeedbackService patientFeedbackService, IMapper mapper, HospitalDbContext context)
         {
             _patientFeedbackService = patientFeedbackService;
             _mapper = mapper;
+            _context = context;
         }
 
         // GET: api/Feedbacks
         [HttpGet]
         public ActionResult<IEnumerable<PatientFeedback>> GetFeedbacks()
         {
+            /*Survey s = new Survey(new DateTime(2011, 10, 21));
+            _context.Surveys.Add(s);
+            _context.SaveChanges();
+            for (int i = 1; i <= 15; i++)
+            {
+                _context.Questions.Add(new Question(s.Id, i, 3, QuestionCategory.hospital));
+            }
+            _context.SaveChanges();*/
+
+            /*var lista = _context.Questions.Where(q => q.SurveyId == 3).ToList();
+            foreach (var list in lista)
+            {
+                System.Diagnostics.Debug.WriteLine(list.Id);
+            }*/
             return _patientFeedbackService.GetAllFeedbacks().ToList();
         }
 

@@ -17,7 +17,8 @@ namespace ehealthcare.Model
         public DbSet<FloorGraphic> FloorGraphics { get; set; }
 
         public DbSet<ExteriorGraphic> ExteriorGraphic { get; set; }
-
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Question> Questions { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected HospitalDbContext()
@@ -480,6 +481,32 @@ namespace ehealthcare.Model
                 Name = "P",
                 Type = "parking",
                 IdElement = "-1"
+            });
+
+            modelBuilder.Entity<Survey>(s =>
+                {
+                    s.HasData(
+                        new Survey()
+                        {
+                            Id = -1,
+                            SubmissionDate = new DateTime(2021, 11, 18)
+
+                        });
+                }
+            );
+
+            modelBuilder.Entity<Question>(q =>
+            {
+                q.HasData(
+                    new Question()
+                    {
+                        SurveyId = -1,
+                        Id = -1,
+                        Value = 1,
+                        Category = QuestionCategory.hospital
+                    });
+
+                q.HasKey(q => new { q.SurveyId, q.Id });
             });
 
         }

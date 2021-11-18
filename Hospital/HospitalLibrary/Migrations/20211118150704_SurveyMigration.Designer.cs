@@ -10,8 +10,8 @@ using ehealthcare.Model;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20211114231147_GraphicRoom")]
-    partial class GraphicRoom
+    [Migration("20211118150704_SurveyMigration")]
+    partial class SurveyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,98 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("HospitalLibrary.FeedbackAndSurvey.Model.PatientFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("Anonymous")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PatientUsername")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PublishAllowed")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PatientFeedbacks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Anonymous = false,
+                            IsPublished = false,
+                            PatientUsername = "p1",
+                            PublishAllowed = false,
+                            SubmissionDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Text = "alallalal"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.FeedbackAndSurvey.Model.Question", b =>
+                {
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SurveyId", "Id");
+
+                    b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            SurveyId = -1,
+                            Id = -1,
+                            Category = 0,
+                            Value = 1
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.FeedbackAndSurvey.Model.Survey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            SubmissionDate = new DateTime(2021, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.ExteriorGraphic", b =>
                 {
@@ -158,48 +250,6 @@ namespace HospitalLibrary.Migrations
                             Id = "1",
                             BuildingId = "0",
                             Floor = 1L
-                        });
-                });
-
-            modelBuilder.Entity("ehealthcare.Model.PatientFeedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("Anonymous")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PatientUsername")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PublishAllowed")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("SubmissionDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PatientFeedbacks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Anonymous = false,
-                            IsPublished = false,
-                            PatientUsername = "p1",
-                            PublishAllowed = false,
-                            SubmissionDate = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Text = "alallalal"
                         });
                 });
 
@@ -410,6 +460,15 @@ namespace HospitalLibrary.Migrations
                             RoomType = 5,
                             Sector = "WS"
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.FeedbackAndSurvey.Model.Question", b =>
+                {
+                    b.HasOne("HospitalLibrary.FeedbackAndSurvey.Model.Survey", "Survey")
+                        .WithMany("Questions")
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.FloorGraphic", b =>
