@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PharmaciesViewComponent } from './pharmacies-view/pharmacies-view.component';
 
 import { FeedBackComponent } from './feedback/feedback.component'
-import { HospitalExteriorViewComponent } from './hospital-exterior-view/hospital-exterior-view.component';
+import { HospitalExteriorViewComponent } from './room-managment/hospital-exterior-view/hospital-exterior-view.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ComplaintsViewComponent } from './complaints-view/complaints-view.component';
 import { ComplaintDetailComponent } from './complaint-detail/complaint-detail.component';

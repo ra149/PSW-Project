@@ -1,4 +1,4 @@
-<app-responsive-sidebar sidenavTitle="Rooms Info">
+<app-responsive-sidebar #sidenav position="end">
   <div app-sidebar-content class="container">
     <button
       type="button"
@@ -30,6 +30,16 @@
     </div>
   </div>
   <div app-sidebar>
+    <mat-toolbar>
+      <button
+        type="button"
+        aria-label="Close sidenav"
+        mat-icon-button
+        (click)="sidenav.close()">
+        <mat-icon aria-label="Side nav close icon">arrow_forward</mat-icon>
+      </button>
+      Rooms Info
+    </mat-toolbar>
     <div class="container side">
       <div class="row justify-content-start">
         <app-room-info [roomGraphic]="roomGraphic"></app-room-info>

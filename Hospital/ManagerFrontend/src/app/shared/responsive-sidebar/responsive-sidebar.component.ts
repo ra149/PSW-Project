@@ -18,8 +18,8 @@ export class ResponsiveSidebarComponent {
     map(result => result.matches),
     shareReplay()
   );
-  @Input() sidenavTitle: string = "";
-  isShowing: boolean = false;
+  @Input() position: 'start' | 'end' = 'start';
+  @Input() opened: boolean = false;
 
   constructor(private _breakpointObserver: BreakpointObserver,
               private _sidenavService: SidenavService) { }
@@ -29,15 +29,15 @@ export class ResponsiveSidebarComponent {
   }
 
   open(): void {
-    this.isShowing = true;
+    this.opened = true;
   }
 
   close(): void {
-    this.isShowing = false;
+    this.opened = false;
   }
 
   toogle(): void {
-    this.isShowing = !this.isShowing;
+    this.opened = !this.opened;
   }
 
 }
