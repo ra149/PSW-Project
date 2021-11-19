@@ -18,5 +18,7 @@ namespace PharmacyLibrary.Service
         public Boolean Update(Medicine m);
 
         public Boolean CheckAvaliableQuantity(int idMedicine, int quantity);
+
+        public Boolean CheckIfExists(string medicineName, int medicineQuantity);
     }
 }

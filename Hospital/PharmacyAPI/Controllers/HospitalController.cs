@@ -59,7 +59,7 @@ namespace PharmacyAPI.Controllers
             return Ok(apiKey);
         }
 
-        [HttpPut]
+        /*[HttpPut]
         public IActionResult Put(UpdatePharmacyApiKey dto)
         {
             Hospital hospital = dbContext.Hospitals.SingleOrDefault(hospital => hospital.HospitalId == dto.HospitalId);
@@ -71,7 +71,7 @@ namespace PharmacyAPI.Controllers
             dbContext.Update(hospital);
             dbContext.SaveChanges();
             return Ok();
-        }
+        }*/
         [HttpPut("{id?}")]
         public IActionResult Put(HospitalDto dto, long id)
         {

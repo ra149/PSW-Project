@@ -73,6 +73,17 @@ namespace IntegrationAPI.Controllers
             return Ok();
 
         }
+        [HttpPost]
+        public IActionResult SearchMedicine(SearchMedicineDTO searchMedicineDto)
+        {
+            List<PharmacyDto> result = new List<PharmacyDto>();
+            if (searchMedicineDto.medicineName.Equals("") || searchMedicineDto.medicineAmount <= 0)
+            {
+                return BadRequest();
+            }
+            medicineService.searchMedicine(searchMedicineDto.medicineName, searchMedicineDto.medicineAmount).ForEach(pharmacy => result.Add(PharmacyAdapter.PharmacyToPharmacyDto(pharmacy)));
+            return Ok(result);
+        }
 
         [HttpPut]
         public IActionResult Put(MedicineDTO dto)

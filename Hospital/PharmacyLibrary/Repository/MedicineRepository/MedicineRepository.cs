@@ -109,6 +109,17 @@ namespace PharmacyLibrary.Repository.MedicineRepository
             return true;
         }
 
+        public Boolean CheckIfExists(string medicineName, int medicineQuantity)
+        {
+            Medicine medicine = pharmacyDbContext.Medicines.FirstOrDefault(medicine => medicine.Name == medicineName);
+            if (medicine == null || medicine.Quantity < medicineQuantity)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
     }
 }
