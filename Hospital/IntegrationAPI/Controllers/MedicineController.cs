@@ -50,7 +50,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]      // POST /api/medicine Request body:
         public IActionResult Add(MedicineDTO dto)
         {
-            if (dto.Id <= 0 || dto.Name.Length <= 0 || dto.MedicineAmmount <= 0)
+            if (dto.Id <= 0 || dto.Name.Length <= 0 || dto.MedicineAmount <= 0)
             {
                 return BadRequest();
             }
@@ -65,7 +65,7 @@ namespace IntegrationAPI.Controllers
                 //existingMedicine.Name = dto.Name;
                 //existingMedicine.MedicineAmmount = existingMedicine.MedicineAmmount + dto.MedicineAmmount;
                 //dbContext.Medicine.Update(existingMedicine);
-                existingMedicine.MedicineAmmount = existingMedicine.MedicineAmmount + dto.MedicineAmmount;
+                existingMedicine.MedicineAmmount = existingMedicine.MedicineAmmount + dto.MedicineAmount;
                 medicineService.SetMedicine(existingMedicine);
             }
             MedicineTransaction transaction = MedicineAdapter.MedicineDtoToMedicineTransaction(dto);
@@ -73,15 +73,16 @@ namespace IntegrationAPI.Controllers
             return Ok();
 
         }
-        [HttpPost]
-        public IActionResult SearchMedicine(SearchMedicineDTO searchMedicineDto)
+
+        [HttpGet("{medicineName}/{medicineAmount}")]
+        public IActionResult SearchMedicine(string medicineName, int medicineAmount)
         {
             List<PharmacyDto> result = new List<PharmacyDto>();
-            if (searchMedicineDto.medicineName.Equals("") || searchMedicineDto.medicineAmount <= 0)
+            if (medicineName.Equals("") || medicineAmount <= 0)
             {
                 return BadRequest();
             }
-            medicineService.searchMedicine(searchMedicineDto.medicineName, searchMedicineDto.medicineAmount).ForEach(pharmacy => result.Add(PharmacyAdapter.PharmacyToPharmacyDto(pharmacy)));
+            medicineService.searchMedicine(medicineName, medicineAmount).ForEach(pharmacy => result.Add(PharmacyAdapter.PharmacyToPharmacyDto(pharmacy)));
             return Ok(result);
         }
 

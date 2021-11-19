@@ -10,7 +10,7 @@ export class OrderingMedicineService {
 
   constructor(private _http: HttpClient) { }
 
-  searchMedicine(name: string, amount: number){
-    return this._http.post('http://localhost:16928/api2/medicine', { "medicineName": name, "medicineAmount": amount})
+  searchMedicine(name: string, amount: number) : Observable<IPharmacy[]> {
+    return this._http.get<IPharmacy[]>('http://localhost:16928/api2/medicine/' + name +'/' + amount);
   }
 }

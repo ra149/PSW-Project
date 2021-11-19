@@ -64,6 +64,7 @@ namespace PharmacyAPI.Controllers
         [HttpPost("{hospitalApiKey?}")]
         public IActionResult CheckIfExists(SearchMedicineDTO searchMedicine, string hospitalApiKey)
         {
+            //ovo treba refaktorisati
             List<Hospital> result = new List<Hospital>();
             dbContext.Hospitals.ToList().ForEach(hospital => result.Add(hospital));
             foreach (Hospital hospital in result)

@@ -13,12 +13,13 @@ export class OrderingMedicineComponent implements OnInit {
   medicineName: string = "";
   medicineAmount: number = 0;
   searchParameter: string = "";
+  notFoundMessage: string = "";
+  notFound: boolean = false;
 
   constructor(private _orderingMedicineService: OrderingMedicineService) { }
 
   ngOnInit(): void {
-    this.pharmacies = [{pharmacyId: 0, pharmacyName:"Jankovic", pharmacyAddress:"Pavla Papa 5, Novi Sad", pharmacyUrl:"www.jankovic.com", hospitalApiKey:"dasa-dsadasd-aasdasd"},
-    {pharmacyId: 1, pharmacyName:"Flos", pharmacyAddress:"Masarikova 11, Novi Sad", pharmacyUrl:"www.flos.com", hospitalApiKey:"dasa-dsadasd-aasdasd"}]
+    
   }
 
   //metoda kojom se narucuje lek prosledjenoj apoteci, sa prosledjenim imenom i kolicinom
@@ -28,6 +29,19 @@ export class OrderingMedicineComponent implements OnInit {
 
   //metoda koja vraca sve apoteke koje sadrze lek sa prosledjenim imenom i kolicinom
   searchMedicine() {
-    this._orderingMedicineService.searchMedicine(this.medicineName,this.medicineAmount).subscribe();
-  }
+    if (this.medicineName === "" && this.medicineAmount === null){
+      this.pharmacies = [];
+      this.notFound = false;
+    } else {
+      this._orderingMedicineService.searchMedicine(this.medicineName,this.medicineAmount).subscribe(
+      pharmacies => {
+        this.pharmacies = pharmacies;
+        if (this.pharmacies.length === 0) {
+          this.notFound = true;
+          this.notFoundMessage = "Medicine isn't found!";
+        } else {
+          this.notFound = false;
+        }
+      })
+    };}
 }

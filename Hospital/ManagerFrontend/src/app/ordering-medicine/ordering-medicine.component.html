@@ -14,7 +14,7 @@
     <table class = "search">
         <tr>
             <td><input type="text" style="width: 300px;margin-bottom: 5px;" class="form-control" placeholder="Enter medicine name" [(ngModel)]="medicineName"> </td>
-            <td><input type="number" class="form-control" style="width: 100px;margin-bottom: 5px;" placeholder="Enter medicine amount" [(ngModel)]="medicineAmount"> </td>
+            <td><input type="number" class="form-control" style="width: 200px;margin-bottom: 5px;" placeholder="Enter medicine amount" [(ngModel)]="medicineAmount"> </td>
             <td><button class="btn  btn-secondary" style="width: 100px;margin-left: 2px;" (click)="searchMedicine()">Search</button></td>
         </tr>
     </table>
@@ -43,5 +43,10 @@
                 </tbody>
             </table>
         </div>
+
+     <!-- Poruka ako nema leka -->
+     <div *ngIf = 'notFound'>
+         <p style="margin-left: 80px; margin-top: 30px; font-size: medium; font-weight: bold;">{{notFoundMessage}}</p>
+     </div>
 </div>
     
