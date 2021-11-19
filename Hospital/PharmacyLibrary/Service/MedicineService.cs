@@ -50,5 +50,10 @@ namespace PharmacyLibrary.Service
 
             return medicineRepository.CheckIfExists(medicineName, medicineQuantity);
         }
+
+        public int reduceQuantityOfMedicine(string medicineName, int medicineAmount)
+        {
+           return medicineRepository.reduceQuantityOfMedicine(medicineName, medicineAmount);
+        }
     }
 }

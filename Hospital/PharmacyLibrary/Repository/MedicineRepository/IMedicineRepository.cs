@@ -19,6 +19,6 @@ namespace PharmacyLibrary.Repository.MedicineRepository
 
         Boolean CheckAvaliableQuantity(int idMedicine, int quantity);
         Boolean CheckIfExists(string medicineName, int medicineQuantity);
-
+        int reduceQuantityOfMedicine(string medicineName, int medicineAmount);
     }
 }

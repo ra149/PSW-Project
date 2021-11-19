@@ -23,8 +23,12 @@ export class OrderingMedicineComponent implements OnInit {
   }
 
   //metoda kojom se narucuje lek prosledjenoj apoteci, sa prosledjenim imenom i kolicinom
-  order(): void {
-    this._orderingMedicineService.orderMedicineHospital(this.medicineName,this.medicineAmount).subscribe();
+  order(pharmacy: IPharmacy): void {
+    if (window.confirm('Are you sure, you want to order medicine from this pharmacy?')){
+      this._orderingMedicineService.orderMedicineHospital(this.medicineName, this.medicineAmount).subscribe();
+      this._orderingMedicineService.orderMedicinePharmacy("http://localhost:29631", pharmacy.hospitalApiKey ,this.medicineName, this.medicineAmount).subscribe();
+      alert('Medicine was successfully orderd!');
+    }
   }
 
   //metoda koja vraca sve apoteke koje sadrze lek sa prosledjenim imenom i kolicinom

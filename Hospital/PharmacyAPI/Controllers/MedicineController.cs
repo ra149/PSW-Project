@@ -61,10 +61,10 @@ namespace PharmacyAPI.Controllers
             return medicineService.CheckAvaliableQuantity(id, quantity);
         }
 
-        [HttpPost("{hospitalApiKey?}")]
+        [HttpPost("{hospitalApiKey?}")] 
         public IActionResult CheckIfExists(SearchMedicineDTO searchMedicine, string hospitalApiKey)
         {
-            //ovo treba refaktorisati
+            //ovo treba refaktorisati zbog dbContexta
             List<Hospital> result = new List<Hospital>();
             dbContext.Hospitals.ToList().ForEach(hospital => result.Add(hospital));
             foreach (Hospital hospital in result)
@@ -72,6 +72,22 @@ namespace PharmacyAPI.Controllers
                 if (hospital.HospitalApiKey == hospitalApiKey)
                 {
                     return Ok(medicineService.CheckIfExists(searchMedicine.medicineName, searchMedicine.medicineAmount));
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{hospitalApiKey}/{medicineName}/{medicineQuantity}")]
+        public IActionResult reduceQuantityOfMedicine(string hospitalApiKey, string medicineName, int medicineQuantity)
+        {
+            //ovo treba refaktorisati zbog dbContexta
+            List<Hospital> result = new List<Hospital>();
+            dbContext.Hospitals.ToList().ForEach(hospital => result.Add(hospital));
+            foreach (Hospital hospital in result)
+            {
+                if (hospital.HospitalApiKey == hospitalApiKey)
+                {
+                    return Ok(medicineService.reduceQuantityOfMedicine(medicineName, medicineQuantity));
                 }
             }
             return NotFound();
