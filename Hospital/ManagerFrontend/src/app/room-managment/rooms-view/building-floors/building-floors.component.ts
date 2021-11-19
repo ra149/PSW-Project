@@ -57,7 +57,7 @@ export class BuildingFloorsComponent implements OnInit {
   }
 
   private getFloors() {
-    this._roomService.getRooms().subscribe(
+    this._roomService.getFloors().subscribe(
       (floors) => {
         this.floors = floors.filter((floor: IFloor) => {
           return (

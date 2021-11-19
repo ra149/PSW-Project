@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IRoom } from '../rooms-view/room';
+import { IRoomGraphic } from '../rooms-view/roomGraphic';
+import { RoomService } from '../rooms-view/rooms.service';
 
 @Component({
   selector: 'app-search-rooms',
@@ -6,23 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-rooms.component.css']
 })
 export class SearchRoomsComponent implements OnInit {
+
   title = 'Search rooms and buildings';
   searchText = '';
-  heroes = [
-    { id: 11, name: 'Mr. Nice', country: 'India' },
-    { id: 12, name: 'Narco' , country: 'USA'},
-    { id: 13, name: 'Bombasto' , country: 'UK'},
-    { id: 14, name: 'Celeritas' , country: 'Canada' },
-    { id: 15, name: 'Magneta' , country: 'Russia'},
-    { id: 16, name: 'RubberMan' , country: 'China'},
-    { id: 17, name: 'Dynama' , country: 'Germany'},
-    { id: 18, name: 'Dr IQ' , country: 'Hong Kong'},
-    { id: 19, name: 'Magma' , country: 'South Africa'},
-    { id: 20, name: 'Tornado' , country: 'Sri Lanka'}
-  ];
-  constructor() { }
+  rooms!: Array<IRoom>;
+  errorMessage = '';
+
+  constructor(private _roomService: RoomService) { }
 
   ngOnInit(): void {
+    this.getRooms();
+  }
+
+  private getRooms() {
+    this._roomService.getRooms().subscribe(
+      (rooms) => {
+        this.rooms = rooms;
+      },
+      (error) => (this.errorMessage = <any>error)
+    );
   }
 
 }

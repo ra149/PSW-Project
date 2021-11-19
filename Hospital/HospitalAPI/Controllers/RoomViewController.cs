@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ehealthcare.Model;
-using HospitalLibrary.Service;
 using HospitalLibrary.GraphicalEditor.Model;
+using ehealthcare.Service;
 
 namespace HospitalAPI.Controllers
 {
@@ -44,6 +44,14 @@ namespace HospitalAPI.Controllers
         {
             var result = _floorGraphicService.GetFloorGraphics();
             return Ok(result.Value.Select(r => _mapper.Map<FloorGraphicDTO>(r)).ToList());
+        }
+
+        [HttpGet]
+        [Route("rooms")]
+        public ActionResult<IList<Room>> GetRooms()
+        {
+            var result = Result.Ok(_roomService.GetAllRooms());
+            return Ok(result.Value.Select(r => _mapper.Map<RoomDTO>(r)).ToList());
         }
 
         [HttpPut]

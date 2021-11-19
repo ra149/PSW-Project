@@ -9,7 +9,7 @@ import { BuildingFloorsComponent } from './rooms-view/building-floors/building-f
 const routes: Routes = [
   { path: 'roomManagment', component: RoomManagmentComponent,
       children: [
-        { path: 'search', component: SearchRoomsComponent },
+        { path: 'searchRooms', component: SearchRoomsComponent },
         { path: 'hospitalExterior', component: HospitalExteriorViewComponent },
         { path: 'building/:buidingId/floor/:floorId', component: BuildingFloorsComponent }
       ]
