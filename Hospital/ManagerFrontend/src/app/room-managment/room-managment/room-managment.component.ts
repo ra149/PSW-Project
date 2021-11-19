@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SidenavService } from 'src/app/shared/responsive-sidebar/sidenav.service';
+import { ResponsiveSidebarComponent } from 'src/app/shared/responsive-sidebar/responsive-sidebar.component';
 
 @Component({
   selector: 'app-room-managment',
@@ -8,15 +8,9 @@ import { SidenavService } from 'src/app/shared/responsive-sidebar/sidenav.servic
 })
 export class RoomManagmentComponent implements OnInit {
 
-  constructor(
-    private _sidenav: SidenavService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  toogle() {
-    this._sidenav.toggle();
   }
 
 }

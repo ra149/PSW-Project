@@ -1,22 +1,16 @@
-<mat-toolbar>
-  <button
-    type="button"
-    aria-label="Toogle sidenav"
-    mat-icon-button
-    (click)="toogle()">
-    <mat-icon aria-label="Side nav toogle icon">menu</mat-icon>
-  </button>
-</mat-toolbar>
-<app-responsive-sidebar position="start" [opened]="true">
+<app-navbar>
+  <div app-navbar-button>
+    <button type="button" aria-label="Toogle sidenav" mat-icon-button (click)="sidenav.toogle()">
+      <mat-icon aria-label="Side nav toogle icon">menu</mat-icon>
+    </button>
+  </div>
+</app-navbar>
+<app-responsive-sidebar #sidenav position="start">
   <div app-sidebar-content>
-    <div class="container">
-      <router-outlet></router-outlet>
-      <!-- <app-search-rooms></app-search-rooms> -->
-    </div>
+    <router-outlet></router-outlet>
   </div>
   <div app-sidebar>
     <div class="container side">
-      
-      </div>
     </div>
+  </div>
 </app-responsive-sidebar>

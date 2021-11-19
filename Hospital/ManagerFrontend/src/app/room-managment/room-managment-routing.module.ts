@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'roomManagment', component: RoomManagmentComponent,
       children: [
         { path: 'search', component: SearchRoomsComponent },
-        { path: 'exsteriorMap', component: HospitalExteriorViewComponent },
+        { path: 'hospitalExterior', component: HospitalExteriorViewComponent },
         { path: 'building/:buidingId/floor/:floorId', component: BuildingFloorsComponent }
       ]
   }

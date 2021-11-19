@@ -81,7 +81,7 @@ export class BuildingFloorsComponent implements OnInit {
   changeFloor(floor: IFloor): void {
     this.selectedFloor = floor;
     this._router.navigate([
-      '/building/' +
+      'roomManagment/building/' +
         this._route.snapshot.paramMap.get('buidingId') +
         '/floor/' +
         floor.floor,
