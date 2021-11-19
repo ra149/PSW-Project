@@ -24,19 +24,19 @@ export class OrderingMedicineComponent implements OnInit {
 
   //metoda kojom se narucuje lek prosledjenoj apoteci, sa prosledjenim imenom i kolicinom
   order(): void {
-
+    this._orderingMedicineService.orderMedicineHospital(this.medicineName,this.medicineAmount).subscribe();
   }
 
   //metoda koja vraca sve apoteke koje sadrze lek sa prosledjenim imenom i kolicinom
   searchMedicine() {
-    if (this.medicineName === "" && this.medicineAmount === null){
+    if (this.medicineName === "" && this.medicineAmount === null){ //da se refresuje nakon sto je izvrseno narucivanje
       this.pharmacies = [];
       this.notFound = false;
     } else {
       this._orderingMedicineService.searchMedicine(this.medicineName,this.medicineAmount).subscribe(
       pharmacies => {
         this.pharmacies = pharmacies;
-        if (this.pharmacies.length === 0) {
+        if (this.pharmacies.length === 0) { //ako nema leka ni u jednoj apoteci
           this.notFound = true;
           this.notFoundMessage = "Medicine isn't found!";
         } else {

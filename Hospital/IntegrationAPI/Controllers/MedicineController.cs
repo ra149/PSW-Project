@@ -50,11 +50,18 @@ namespace IntegrationAPI.Controllers
         [HttpPost]      // POST /api/medicine Request body:
         public IActionResult Add(MedicineDTO dto)
         {
-            if (dto.Id <= 0 || dto.Name.Length <= 0 || dto.MedicineAmount <= 0)
+            if (dto.Name.Length <= 0 || dto.MedicineAmount <= 0)
             {
                 return BadRequest();
             }
-            Medicine existingMedicine = medicineService.GetMedicine(dto.Id);
+            Medicine existingMedicine = new Medicine();
+            if (dto.Id == -1) { //id ce biti jedan kada se salje zahtev za narucivanje i treba uvecati kolicinu a imamo informaciju samo o nazivu leka
+                existingMedicine = medicineService.GetMedicineByName(dto.Name);
+            } else
+            {
+               existingMedicine = medicineService.GetMedicine(dto.Id);
+            }
+            
             if (existingMedicine == null)
             {
                 Medicine newMedicine = MedicineAdapter.MedicineDtoToMedicine(dto);

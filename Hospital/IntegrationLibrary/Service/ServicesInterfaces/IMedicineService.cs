@@ -16,5 +16,6 @@ namespace IntegrationLibrary.Service.ServicesInterfaces
         public void DeleteMedicine(Medicine id);
         public Medicine GetMedicine(int id);
         public List<Pharmacy> searchMedicine(string medicineName, int medicineAmount);
+        public Medicine GetMedicineByName(string name);
     }
 }

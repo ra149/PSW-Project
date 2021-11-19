@@ -99,5 +99,10 @@ namespace IntegrationLibrary.Service
 
             return pharmacies;
         }
+
+        public Medicine GetMedicineByName(string name)
+        {
+            return this.medicineRepository.GetMedicineByName(name);
+        }
     }
 }
