@@ -54,18 +54,23 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest();
             }
+
             Medicine existingMedicine = new Medicine();
-            if (dto.Id == -1) { //id ce biti jedan kada se salje zahtev za narucivanje i treba uvecati kolicinu a imamo informaciju samo o nazivu leka
+            if (dto.Id == -1) { 
+                //id ce biti -1 kada se salje zahtev za narucivanje i treba uvecati kolicinu a imamo informaciju samo o nazivu leka, nemamo id
                 existingMedicine = medicineService.GetMedicineByName(dto.Name);
             } else
             {
                existingMedicine = medicineService.GetMedicine(dto.Id);
             }
-            
+
             if (existingMedicine == null)
             {
                 Medicine newMedicine = MedicineAdapter.MedicineDtoToMedicine(dto);
                 medicineService.AddMedicine(newMedicine);
+                MedicineTransaction transaction = MedicineAdapter.MedicineDtoToMedicineTransaction(dto); 
+                transaction.MedicineId = newMedicine.Id;//da bi MedicineTransaction imao id novog leka
+                transactionService.Save(transaction);
             }
             else
             {
@@ -74,9 +79,10 @@ namespace IntegrationAPI.Controllers
                 //dbContext.Medicine.Update(existingMedicine);
                 existingMedicine.MedicineAmmount = existingMedicine.MedicineAmmount + dto.MedicineAmount;
                 medicineService.SetMedicine(existingMedicine);
+                MedicineTransaction transaction = MedicineAdapter.MedicineDtoToMedicineTransaction(dto); 
+                transaction.MedicineId = existingMedicine.Id;//da bi MedicineTransaction imao id pronadjenog leka
+                transactionService.Save(transaction);
             }
-            MedicineTransaction transaction = MedicineAdapter.MedicineDtoToMedicineTransaction(dto);
-            transactionService.Save(transaction);
             return Ok();
 
         }
