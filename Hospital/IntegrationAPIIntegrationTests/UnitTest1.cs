@@ -9,6 +9,7 @@ namespace IntegrationAPIIntegrationTests
         public void Test1()
         {
 
+            Assert.Equal(5, 4);
         }
     }
 }
