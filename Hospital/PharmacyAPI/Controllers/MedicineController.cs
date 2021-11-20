@@ -77,8 +77,8 @@ namespace PharmacyAPI.Controllers
             return NotFound();
         }
 
-        [HttpGet("{hospitalApiKey}/{medicineName}/{medicineQuantity}")]
-        public IActionResult reduceQuantityOfMedicine(string hospitalApiKey, string medicineName, int medicineQuantity)
+        [HttpPut("{hospitalApiKey}")]
+        public IActionResult reduceQuantityOfMedicine(SearchMedicineDTO searchMedicine, string hospitalApiKey)
         {
             //ovo treba refaktorisati zbog dbContexta
             List<Hospital> result = new List<Hospital>();
@@ -87,7 +87,7 @@ namespace PharmacyAPI.Controllers
             {
                 if (hospital.HospitalApiKey == hospitalApiKey)
                 {
-                    return Ok(medicineService.reduceQuantityOfMedicine(medicineName, medicineQuantity));
+                    return Ok(medicineService.reduceQuantityOfMedicine(searchMedicine.medicineName, searchMedicine.medicineAmount));
                 }
             }
             return NotFound();
